@@ -18,32 +18,36 @@ The guardrails framework now works with **ANY agent interface**:
 - **OpenAI clients**: Direct OpenAI API client integration
 - **Auto-detection**: Automatically detects agent interface type
 
-### Quick Guardrails Demo
+### Quick Guardrails Demo - Just 4 Lines of Code!
 
 ```python
 from guardrails import GuardrailsEngine
 from guardrails.input_guardrails.length_validator import LengthValidatorGuardrail
 from guardrails.output_guardrails.pii_filter import PIIFilterGuardrail
 
-# Create guardrails engine
+# Your existing agent (no changes needed!)
+agent = YourExistingAgent()
+
+# Add guardrails with just 4 lines:
 engine = GuardrailsEngine()
-engine.add_input_guardrail(LengthValidatorGuardrail("length_check"))
-engine.add_output_guardrail(PIIFilterGuardrail("pii_filter"))
+engine.add_input_guardrail(LengthValidatorGuardrail("length"))  # Default settings
+engine.add_output_guardrail(PIIFilterGuardrail("pii"))         # Default settings  
+guarded_agent = engine.wrap_agent(agent)
 
-# Wrap ANY agent with guardrails (works with ANY interface!)
-guarded_agent = engine.wrap_agent(your_existing_agent)
-
-# Use exactly like before - guardrails work transparently
+# Use exactly like before - guardrails work transparently!
 response = guarded_agent.chat("Your message here")
 ```
 
 ### Try the Demonstrations
 
 ```bash
+# Simple guardrails demo (minimal code example - START HERE!)
+python demo_scripts/simple_guardrails_demo.py
+
 # Universal agent compatibility demo
 python demo_scripts/demo_universal_agents.py
 
-# Original guardrails demo
+# Full guardrails demo
 python demo_scripts/demo_guardrails.py
 
 # Run all tests
@@ -501,7 +505,8 @@ logging.basicConfig(level=logging.DEBUG)
 │   ├── test_agent_openai.py   # OpenAI agent tests
 │   └── test_agent.py          # Bedrock agent tests
 ├── demo_scripts/              # 🎯 Demo Scripts
-│   ├── demo_guardrails.py     # Guardrails demonstration
+│   ├── simple_guardrails_demo.py # Minimal 4-line code example
+│   ├── demo_guardrails.py     # Full guardrails demonstration
 │   ├── demo_universal_agents.py # Universal compatibility demo
 │   └── README.md              # Demo documentation
 ├── setup_scripts/             # ⚙️ Setup Scripts

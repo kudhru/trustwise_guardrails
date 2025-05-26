@@ -4,6 +4,7 @@ This directory contains demonstration scripts that showcase the capabilities of 
 
 ## Scripts
 
+- **`simple_guardrails_demo.py`** - **NEW!** Minimal example showing how to add guardrails with just 4 lines of code
 - **`demo_guardrails.py`** - Demonstrates the core guardrails functionality including input and output validation
 - **`demo_universal_agents.py`** - Showcases universal agent capabilities and interactions with guardrails
 
@@ -12,7 +13,10 @@ This directory contains demonstration scripts that showcase the capabilities of 
 Run these scripts from the project root directory:
 
 ```bash
-# Run guardrails demo
+# Run simple guardrails demo (minimal code example)
+python demo_scripts/simple_guardrails_demo.py
+
+# Run full guardrails demo
 python demo_scripts/demo_guardrails.py
 
 # Run universal agents demo
@@ -28,7 +32,20 @@ python demo_scripts/demo_universal_agents.py
 ## What to Expect
 
 These demos will show you:
-- How to implement input and output guardrails
-- Real-time validation and filtering
-- Agent behavior with guardrails enabled
-- Best practices for integration 
+
+**Simple Demo (`simple_guardrails_demo.py`):**
+- Minimal code example (just 4 lines!)
+- How to wrap an existing agent with guardrails
+- Default guardrails in action
+- Perfect starting point for beginners
+
+**Full Demo (`demo_guardrails.py`):**
+- Comprehensive guardrails functionality
+- Custom configuration options
+- Multiple test scenarios
+- Advanced features and customization
+
+**Universal Demo (`demo_universal_agents.py`):**
+- Agent compatibility across different interfaces
+- Auto-detection capabilities
+- Multiple agent types with same guardrails 
