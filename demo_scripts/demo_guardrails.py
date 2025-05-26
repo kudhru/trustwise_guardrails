@@ -8,8 +8,8 @@ without modifying the agent code.
 import sys
 import os
 
-# Add the current directory to the path for imports
-sys.path.append(os.path.dirname(__file__))
+# Add the parent directory to the path for imports
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from guardrails import GuardrailsEngine
 from guardrails.input_guardrails.length_validator import LengthValidatorGuardrail
@@ -48,46 +48,35 @@ def demonstrate_basic_usage():
     print("🛡️  Basic Guardrails Demonstration")
     print("=" * 50)
     
-    # Choose agent
-    if AGENT_AVAILABLE:
-        try:
-            agent = OpenAIAgent()
-            print("✅ Using OpenAI agent")
-        except Exception as e:
-            print(f"⚠️  OpenAI agent failed, using mock: {e}")
-            agent = MockAgent()
-    else:
-        agent = MockAgent()
-        print("📝 Using mock agent for demonstration")
+    # # Choose agent
+    # if AGENT_AVAILABLE:
+    #     try:
+    #         agent = OpenAIAgent()
+    #         print("✅ Using OpenAI agent")
+    #     except Exception as e:
+    #         print(f"⚠️  OpenAI agent failed, using mock: {e}")
+    #         agent = MockAgent()
+    # else:
+    #     agent = MockAgent()
+    #     print("📝 Using mock agent for demonstration")
+    
+    # Initialize the agent
+    agent = OpenAIAgent()
     
     # Create guardrails engine
     engine = GuardrailsEngine()
     
+    # Wrap the agent with guardrails
+    guarded_agent = engine.wrap_agent(agent)
+    
     # Add input guardrail (length validation)
-    length_guard = LengthValidatorGuardrail(
-        "length_check",
-        config={
-            "min_length": 3,
-            "max_length": 100,
-            "truncate": True,
-            "truncate_suffix": "..."
-        }
-    )
+    length_guard = LengthValidatorGuardrail()
     engine.add_input_guardrail(length_guard)
     
     # Add output guardrail (PII filtering)
-    pii_guard = PIIFilterGuardrail(
-        "pii_filter",
-        config={
-            "mask_emails": True,
-            "mask_phones": True,
-            "replacement": "[REDACTED]"
-        }
-    )
+    pii_guard = PIIFilterGuardrail()
     engine.add_output_guardrail(pii_guard)
     
-    # Wrap the agent with guardrails
-    guarded_agent = engine.wrap_agent(agent)
     
     print(f"\n📊 Guardrails Stats: {engine.get_stats()}")
     print(f"🤖 Wrapped Agent: {guarded_agent}")

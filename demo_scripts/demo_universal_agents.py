@@ -8,8 +8,8 @@ with different interfaces (chat, invoke, run, callable, etc.)
 import sys
 import os
 
-# Add the current directory to the path for imports
-sys.path.append(os.path.dirname(__file__))
+# Add the parent directory to the path for imports
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from guardrails import GuardrailsEngine, detect_agent_interface
 from guardrails.input_guardrails.length_validator import LengthValidatorGuardrail
